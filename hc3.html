@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Sana ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Poppins', sans-serif;
+        overflow: hidden;
+    }
+
+    .container {
+        text-align: center;
+        z-index: 5;
+    }
+
+    h1 {
+        font-size: 2.8rem;
+        color: #b30059;
+    }
+
+    button {
+        padding: 14px 32px;
+        font-size: 1.3rem;
+        border: none;
+        border-radius: 14px;
+        cursor: pointer;
+        position: absolute;
+        transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+        background-color: #ff4d6d;
+        color: white;
+        position: relative;
+        margin-top: 25px;
+    }
+
+    .noBtn {
+        background-color: #444;
+        color: white;
+    }
+
+    .heart {
+        position: absolute;
+        font-size: 1.8rem;
+        animation: floatUp 2s ease-out forwards;
+    }
+
+    @keyframes floatUp {
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(-200px); opacity: 0; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Will you be my girlfriend, Sana? ❤️</h1>
+    <button id="yesBtn" onclick="sayYes()">Yes 💖</button>
+</div>
+
+<script>
+    let yesScale = 1;
+    let noCount = 1;
+    const maxNo = 3;
+
+    createNoButton(200, 330);
+
+    function createNoButton(x, y) {
+        const btn = document.createElement("button");
+        btn.innerText = "No 💔";
+        btn.className = "noBtn";
+        btn.style.left = x + "px";
+        btn.style.top = y + "px";
+        btn.onclick = (e) => noClicked(e, btn);
+        document.body.appendChild(btn);
+    }
+
+    function noClicked(event, btn) {
+        yesScale += 0.2;
+        document.getElementById("yesBtn").style.transform =
+            `scale(${yesScale})`;
+
+        // Stewie image
+        const img = document.createElement("img");
+        img.src = "./stewie.png";
+        img.style.position = "absolute";
+        img.style.left = (event.clientX - 60) + "px";
+        img.style.top = (event.clientY - 60) + "px";
+        img.style.width = "120px";
+        document.body.appendChild(img);
+        setTimeout(() => img.remove(), 1500);
+
+        // Add one more NO occasionally
+        if (noCount < maxNo && Math.random() > 0.6) {
+            noCount++;
+            createNoButton(
+                Math.random() * (window.innerWidth - 100),
+                Math.random() * (window.innerHeight - 60)
+            );
+        }
+
+        // Move NO button
+        btn.style.left =
+            Math.random() * (window.innerWidth - 100) + "px";
+        btn.style.top =
+            Math.random() * (window.innerHeight - 60) + "px";
+    }
+
+    function sayYes() {
+        document.body.innerHTML = `
+            <div style="text-align:center;">
+                <h1 style="font-size:3.2rem;color:#b30059;">
+                    YAY!!! 💕😍
+                </h1>
+                <p style="font-size:1.8rem;">
+                    Sana, you just made me really happy ❤️
+                </p>
+                <img src="./happycat.gif"
+                     style="width:260px;border-radius:20px;margin-top:20px;">
+                <p style="font-size:1.3rem;margin-top:15px;">
+                    Happy Valentine’s Day 💌
+                </p>
+            </div>
+        `;
+
+        // Hearts animation
+        for (let i = 0; i < 25; i++) {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerText = "💖";
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.top = window.innerHeight + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 2000);
+        }
+    }
+</script>
+
+</body>
+</html>
